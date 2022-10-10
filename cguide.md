@@ -121,7 +121,7 @@ Draft
 ### Contact Information
 
 Please, send your comments and notes about found errors, typos, and
-inconsistencies to <support@oktetlabs.ru>.
+inconsistencies to issues of the repo.
 
 ### Revision History
 
@@ -229,21 +229,6 @@ pandect of rules, but also give rationale and reasons for some of them.
 
 Doxygen-specific guidelines concerning resulting documentation
 formatting and common issues will be described in a separate document.
-
-Contributors
-------------
-
--   Victor V. Vengerov <Victor.Vengerov@oktetlabs.ru>
-
--   Elena A. Vengerova <Elena.Vengerova@oktetlabs.ru>
-
--   Konstantin Abramenko <Konstantin.Abramenko@oktetlabs.ru>
-
--   Dmitry V. Semyonov <Dmitry.Semyonov@oktet.ru>
-
--   Andrew Rybchenko <Andrew.Rybchenko@oktetlabs.ru>
-
--   Artem Andreev <Artem.Andrev@oktetlabs.ru>
 
 General
 =======
@@ -907,8 +892,7 @@ developer of this module. The section consists of the author’s name (in
 English transcription) and e-mail address which may be used later to
 contact the author regarding to these sources. It is allowed to have
 multiple ‘`@author`’ sections if principal developer has been changed;
-put a name of the last principal developer first. OKTET Labs employees
-shall use \<Name.Surname@oktetlabs.ru\> form of e-mail address.
+put a name of the last principal developer first.
 
 Optional part ‘`license term notice`’ may be added to provide
 information about licensing terms for this source file, about
@@ -927,12 +911,9 @@ Note that doxygen-style comment and tags are used here.
      *
      * Chip-specific primitive implementation.
      *
-     * Copyright (C) 2012 OKTET Labs, St.-Petersburg, Russia
+     * Copyright (C) <your copyright>
      *
-     * @author Victor V. Vengerov <Victor.Vengerov@oktetlabs.ru>
-     * @author Andrew Rybchenko <Andrew.Rybchenko@oktetlabs.ru>
-     *
-     * $Id: $
+     * @author Konstantin Ushakov <mail> 
      */
 
 Generated file headers
