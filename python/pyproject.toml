@@ -1,27 +1,89 @@
-[tool.yapf]
-align_closing_bracket_with_visual_indent = false
-based_on_style = "google"
-blank_line_before_nested_class_or_def = true
-blank_lines_between_top_level_imports_and_variables = 2
-coalesce_brackets = true
-column_limit = 96
-continuation_indent_width = 4
-dedent_closing_brackets = false
-force_multiline_dict = true
-indent_closing_brackets = false
-indent_width = 4
-spaces_before_comment = 4
-split_before_first_argument = false
-split_before_logical_operator = true
-split_complex_comprehension = true
+#
+# If you're using Poetry:
+#
+
+[tool.poetry]
+name = "fixme: name"
+version = "1.0.0"
+description = "fixme: description"
+authors = [
+    "Alice Cooper <Alice.Cooper@oktet.co.il>"
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+# Various versions
+# python = "~3.9"
+# urllib3 = "1.26.18"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+ruff = "^0.1.11"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+#
+# Linters
+#
+
+[tool.ruff]
+line-length = 96
+# fixme: set the version you need
+target-version = "py38"
+show-fixes = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN", # We will use mypy for annotations
+    "D1", # Too many places where docstrings are needed
+    # "S101" # We will not use the -O flag for compiling to optimised byte code
+    "FA102", # We don't need backward compatibility for python version below 3.9
+    "FA100", # Missing `from __future__ import annotations`, but uses `typing.Union`
+    "EM101", # About raw string in exception. Makes code ugly with unnecessary variables.
+    "COM812", # may conflct with ruff formatter
+    "ISC001", # may conflct with ruff formatter
+]
+
+[tool.ruff.lint.pylint]
+max-args = 16
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 96
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+    "F401" # "imported but unused" is ok for __init__.py files
+]
+"tests/*" = [
+    "S101", # Unactual for tests
+]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+avoid-escape = false
+
+[tool.ruff.format]
+quote-style = "single"
+
+
+#
+# Type checking
+#
+# See: https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml
 
 [tool.mypy]
-check_untyped_defs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-disallow_untyped_decorators = true
-disallow_any_unimported = true
-warn_return_any = true
-warn_unused_ignores = true
-no_implicit_optional = true
-show_error_codes = true
+check_untyped_defs = True
+disallow_untyped_defs = True
+disallow_incomplete_defs = True
+disallow_untyped_decorators = True
+disallow_any_unimported = True
+warn_return_any = True
+warn_unused_ignores = True
+no_implicit_optional = True
+show_error_codes = True

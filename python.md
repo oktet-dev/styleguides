@@ -1,131 +1,58 @@
-# OKTET Labs python development guide
+# OKTET Python development guide
 
-- [OKTET Labs python development guide](#oktet-labs-python-development-guide)
-  - [Versions and dependencies](#versions-and-dependencies)
-  - [Coding style](#coding-style)
-  - [Formatters](#formatters)
-    - [YAPF](#yapf)
-    - [f-strings](#f-strings)
-  - [Linters](#linters)
-    - [pylint](#pylint)
-    - [mypy](#mypy)
-  - [Editors/configuration](#editorsconfiguration)
-    - [VSCode](#vscode)
-    - [VIM](#vim)
-    - [Emacs](#emacs)
-  - [Project scripting](#project-scripting)
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [OKTET Python development guide](#oktet-python-development-guide)
+    - [Versions and dependencies](#versions-and-dependencies)
+    - [Config file](#config-file)
+    - [Ruff: code format](#ruff-code-format)
+    - [Ruff: linters](#ruff-linters)
+    - [mypy: type checking](#mypy-type-checking)
+    - [Project scripting](#project-scripting)
+
+<!-- markdown-toc end -->
 
 ## Versions and dependencies
 
 Python version depends on the system you're targeting. Keep in mind that:
 
 - you MUST NOT write new code for `python2.x`;
-- RHEL7.4 which is default for some enterprises does not allow to install
-  anything but 3.6;
-- with the RHEL7 exception you MUST NOT rely on non-standard python
-  interpreters, i.e. if target distro allows `python3.9` you MUST NOT assume
-  you will manage to install `python3.11` unless it's explicitly approved;
 - you MUST NOT rely on packages that can't be installed via `pip` OR your distro
   (`apt/dnf/yum`) OR bundled with your scripts;
 - you SHOULD use `python -m pip install` instead of simply `pip install`,
   where `python` is certain Python interpreter version you intend to use.
 
-## Coding style
+## Config file
 
-OL coding style is mostly equivalent to google
-https://google.github.io/styleguide/pyguide.html with the exception that is
-documented below in the yaml tool format.
+Use `pyproject.toml` from `python/` directory of this styleguide and put it into the root of your project.
 
-yapf config+results have higher priority over whatever is written in the
-standard. Running formatter on your formatted code should have zero diff.
+Don't use or have any other files in your project unless absolutely necessary.
 
-## Formatters
+## Ruff: code format
 
-### YAPF
+Use `ruff format`.
 
-We use yapf in it's default configuration. It's at least 0.30 and can be
-installed via `pip`.
+See https://github.com/astral-sh/ruff?tab=readme-ov-file#usage
 
-https://github.com/google/yapf is the tool.
+## Ruff: linters
 
-We have slightly different config:
+Use `ruff check`.
 
-- look for table **\[yapf\]** at [setup.cfg](./python/setup.cfg);
-- or look for table **\[tool.yapf\]** at [pyproject.toml](./python/pyproject.toml)
+See https://github.com/astral-sh/ruff?tab=readme-ov-file#usage
 
-### f-strings
-
-Unless you know why you MUST use fstrings over `%-f` and `.format()`. You will
-get complains from linters as well as your coleagues.
-
-Note, that you can use:
-
-`flynt`
-
-tool (`pip install flynt`) to do your code conversion.
-
-## Linters
-
-### pylint
-
-Please take this config [pylintrc](./python/pylintrc) and place it into the
-project workspace folder.
-
-### mypy
+## mypy: type checking
 
 If writing on python3 you MUST use type annotation and you MUST have a clean
-mypy run with the below config:
-
-- look for table **\[mypy\]** at [setup.cfg](./python/setup.cfg);
-- or look for table **\[tool.mypy\]** at [pyproject.toml](./python/pyproject.toml)
-
-The `setup.cfg` file must be placed at the top level of your repo so all tools
-see it and handle correctly. Invocation should include:
-
-- `--follow-imports=silent`
-- `--ignore-missing-imports`
-- `--show-column-numbers`
-- `--no-pretty`
+mypy run with the config from `python/`
 
 `mypy` version to be used: at least 0.8. Can be installed from `pip` or
 automatically by the IDE.
 
-## Editors/configuration
-
-### VSCode
-
-Usually VSCode project config file is `.vscode/settings.json`.
-
-```json
-    "python.linting.mypyEnabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.formatting.provider": "yapf",
-
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.rulers": [100],
-    },
-```
-
-Notes:
-
-- You may find extension Pylance quite helpful;
-- There is no need to install extensions Pylint, Mypy, and YAPF - VSCode can find
-  appropriate tools installed in virtual environment;
-- All `pylintrc`, `setup.cfg` (or `pyproject.toml`) affect linting and formatting.
-
-### VIM
-
-### Emacs
-
 ## Project scripting
 
-Project should have:
+Project should have 3 scripts:
 
-- [pylintrc](./python/pylintrc);
-- [setup.cfg](./python/setup.cfg) or [pyproject.toml](./python/pyproject.toml).
-- `scripts/pyformat` and `scripts/pycheck` that are doing the right thing for
-  those who want to invoke them by hands or for all patches in the patch series.
-
-`pyformat` should apply all agreed formatters. `pycheck` should apply all agreed
-linters.
+ - `pyformat` should apply all agreed formatters,
+ - `pycheck` should apply all agreed linters,
+ - `pytest` should run all the selftest tests that you have if any.
